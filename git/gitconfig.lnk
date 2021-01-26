@@ -4,6 +4,7 @@
   email = lucasgiacomazzi@gmail.com
 [init]
   defaultBranch= main
+	templateDir = /Users/lucasdanielgiacomazzi/.dotfiles/git/templates
 [color]
   diff = auto
   status = auto
