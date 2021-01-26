@@ -15,7 +15,7 @@ setw -g aggressive-resize on
 #
 # Theme from https://github.com/nicknisi/dotfiles
 #
-source ~/dotfiles/tmux/base16.sh
+source ~/.dotfiles/tmux/base16.sh
 
 # Automatic tmux restore
 set -g @continuum-restore 'on'

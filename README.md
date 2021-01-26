@@ -7,8 +7,8 @@ interesting, and if you like contribute back tips, tricks, and other tidbits via
 
 ## Installation
 ```bash
-git clone git@github.com:saaguero/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+git clone git@github.com:lucas-giaco/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 bash install.sh
 ```
 
