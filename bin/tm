@@ -5,7 +5,8 @@
 [ "$TMUX" == "" ] || exit 0
 
 PS3="Please choose your session: "
-options=("new" $(tmux list-sessions -F "#S"))
+sessions=$(tmux list-sessions -F "#S")
+options=("new" $sessions)
 echo ""
 echo "Available sessions"
 echo "=================="
@@ -13,12 +14,12 @@ select opt in "${options[@]}"
 do
   case $opt in
     "new")
-      read -p "Enter new session name: " SESSION_NAME
+      read -rp "Enter new session name: " SESSION_NAME
       tmux new -s "$SESSION_NAME"
       break
       ;;
     *)
-    tmux attach-session -t $opt
+    tmux attach-session -t "$opt"
     break
     ;;
   esac

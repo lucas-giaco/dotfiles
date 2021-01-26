@@ -11,9 +11,6 @@ alias man="TERM=xterm man"
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
-# Misc alias
-alias ll='ls -larth'
-
 # git aliases
 alias ga='git add'
 alias gaa='git add --all'
@@ -22,9 +19,7 @@ alias gcm='git commit -m '
 alias gd='git diff'
 alias gs='git status'
 
-# k8s and friends aliases
-hash helm &>/dev/null && source <(helm completion bash)
-hash kind &>/dev/null && source <(kind completion bash)
+# k8s aliases
 hash kubectl &>/dev/null && \
   alias k=kubectl && \
   alias kc='kubectl config set-context --current --namespace ' && \
@@ -32,3 +27,28 @@ hash kubectl &>/dev/null && \
   source <(kubectl completion bash) && \
   complete -F __start_kubectl k
 
+# Alias based on OS
+if [ "$(uname)" == "Darwin" ]; then
+  alias ls="command ls -G"
+  alias ll="ls -lahF -G"
+  alias stripcolor="sed 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g'"
+  alias path="greadlink -f"
+else
+  alias ls="command ls --color"
+  alias ll="ls -lahF --color"
+  alias path="readlink -f"
+  alias stripcolor="sed 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' -r"
+  alias grep='grep --color'
+
+  if hash vim &>/dev/null; then
+      alias vi="vim"
+  fi
+
+  if hash espeak &>/dev/null; then
+      alias say='echo "$1" | espeak -s 120 2>/dev/null'
+  fi
+
+  if hash gnome-open &>/dev/null; then
+    alias open=gnome-open
+  fi
+fi

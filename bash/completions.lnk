@@ -1,0 +1,23 @@
+#!/bin/bash
+if which brew >/dev/null 2>&1; then
+  . "$(brew --prefix)/etc/bash_completion"
+else
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  fi
+fi
+
+# gcloud completion bash
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+
+# Add completion scripts based on OS
+bash_completion_location=""
+if [ "$(uname)" == "Darwin" ]; then
+  bash_completion_location=/usr/local/etc/bash_completion.d
+else
+  bash_completion_location=/etc/bash_completion.d
+fi
+
+hash helm &>/dev/null && helm completion bash > $bash_completion_location/helm
+hash kind &>/dev/null && kind completion bash > $bash_completion_location/kind
