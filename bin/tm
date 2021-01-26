@@ -1,0 +1,25 @@
+#!/bin/bash
+# Adapted from https://github.com/nicknisi/dotfiles
+
+# Exit if we're inside a tmux session
+[ "$TMUX" == "" ] || exit 0
+
+PS3="Please choose your session: "
+options=("new" $(tmux list-sessions -F "#S"))
+echo ""
+echo "Available sessions"
+echo "=================="
+select opt in "${options[@]}"
+do
+  case $opt in
+    "new")
+      read -p "Enter new session name: " SESSION_NAME
+      tmux new -s "$SESSION_NAME"
+      break
+      ;;
+    *)
+    tmux attach-session -t $opt
+    break
+    ;;
+  esac
+done

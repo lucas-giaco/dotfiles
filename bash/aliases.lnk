@@ -1,0 +1,34 @@
+#!/bin/bash
+# Allow alias expansion in non-interactive shells
+shopt -s expand_aliases
+
+# make less to handle ansi codes correctly
+alias less="TERM=xterm less -r"
+
+# force TERM for man as otherwise it doesn't highlight propertly in tmux
+alias man="TERM=xterm man"
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Misc alias
+alias ll='ls -larth'
+
+# git aliases
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git checkout'
+alias gcm='git commit -m '
+alias gd='git diff'
+alias gs='git status'
+
+# k8s and friends aliases
+hash helm &>/dev/null && source <(helm completion bash)
+hash kind &>/dev/null && source <(kind completion bash)
+hash kubectl &>/dev/null && \
+  alias k=kubectl && \
+  alias kc='kubectl config set-context --current --namespace ' && \
+  alias kx='kubectl explain' && \
+  source <(kubectl completion bash) && \
+  complete -F __start_kubectl k
+

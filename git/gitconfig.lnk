@@ -1,0 +1,6 @@
+# This is Git's per-user configuration file.
+[user]
+  name = Lucas Giacomazzi
+  email = lucasgiacomazzi@gmail.com
+[color]
+  ui = auto
