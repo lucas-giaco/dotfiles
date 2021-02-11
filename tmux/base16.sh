@@ -1,54 +1,77 @@
 # Base16 Styling Guidelines:
 
-base00=default   # - Default
-base01='#151515' # - Lighter Background (Used for status bars)
-base02='#202020' # - Selection Background
-base03='#909090' # - Comments, Invisibles, Line Highlighting
-base04='#505050' # - Dark Foreground (Used for status bars)
-base05='#D0D0D0' # - Default Foreground, Caret, Delimiters, Operators
-base06='#E0E0E0' # - Light Foreground (Not often used)
-base07='#F5F5F5' # - Light Background (Not often used)
-base08='#AC4142' # - Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-base09='#D28445' # - Integers, Boolean, Constants, XML Attributes, Markup Link Url
-base0A='#F4BF75' # - Classes, Markup Bold, Search Text Background
-base0B='#90A959' # - Strings, Inherited Class, Markup Code, Diff Inserted
-base0C='#75B5AA' # - Support, Regular Expressions, Escape Characters, Markup Quotes
-base0D='#6A9FB5' # - Functions, Methods, Attribute IDs, Headings
-base0E='#AA759F' # - Keywords, Storage, Selector, Markup Italic, Diff Changed
-base0F='#8F5536' # - Deprecated, Opening/Closing Embedded Language Tags, e.g. <? php ?>
-
-set -g status-left-length 32
+# Length of tmux status line
+set -g status-left-length 30
 set -g status-right-length 150
+
+# Refresh status line every 5 seconds - Good for when music is playing / update time etc
 set -g status-interval 5
 
+# Start window and pane indices at 1.
+set -g base-index 1
+set -g pane-base-index 0
+
+set-option -g status "on"
+
 # default statusbar colors
-set-option -g status-style fg=$base02,bg=$base00,default
+set-option -g status-style bg=colour237,fg=colour223 # bg=bg1, fg=fg1
 
-set-window-option -g window-status-style fg=$base03,bg=$base00
-set-window-option -g window-status-format " #I #W"
+# Default window title colors
+set-window-option -g window-status-style bg=colour214,fg=colour237 # bg=yellow, fg=bg1
 
-# active window title colors
-set-window-option -g window-status-current-style fg=$base0C,bg=$base00
-set-window-option -g window-status-current-format " #I #[bold]#W"
+# Default window with an activity alert
+set-window-option -g window-status-activity-style bg=colour237,fg=colour248 # bg=bg1, fg=fg3
 
-# pane border colors
-set-window-option -g pane-active-border-style fg=$base0C
-set-window-option -g pane-border-style fg=$base03
+# Active window title colors
+set-window-option -g window-status-current-style bg=red,fg=colour237 # fg=bg1
 
-# message text
-set-option -g message-style bg=$base00,fg=$base0C
+# Set active pane border color
+set-option -g pane-active-border-style fg=colour214
 
-# pane number display
-set-option -g display-panes-active-colour $base0C
-set-option -g display-panes-colour $base01
+# Set inactive pane border color
+set-option -g pane-border-style fg=colour239
 
-# clock
-set-window-option -g clock-mode-colour $base0C
+# Message info
+set-option -g message-style bg=colour239,fg=colour223 # bg=bg2, fg=fg1
 
-tm_session_name="#[default,bg=$base00,fg=$base0E] #S "
-set -g status-left "$tm_session_name"
+# Writing commands inactive
+set-option -g message-command-style bg=colour239,fg=colour223 # bg=fg3, fg=bg1
 
-tm_date="#[default,bg=$base00,fg=$base0C] %R"
-tm_host="#[fg=$base0E,bg=$base00] #h "
-tm_k8s="#(/bin/bash $HOME/.tmux/plugins/kube-tmux/kube.tmux 250 red cyan)"
-set -g status-right "$tm_k8s | $tm_date $tm_host"
+# Pane number display
+set-option -g display-panes-active-colour colour1 #fg2
+set-option -g display-panes-colour colour237 #bg1
+
+# Clock
+set-window-option -g clock-mode-colour colour109 #blue
+
+# Bell
+set-window-option -g window-status-bell-style bg=colour167,fg=colour235 # bg=red, fg=bg
+
+set-option -g status-left "\
+#[fg=colour7, bg=colour241]#{?client_prefix,#[bg=colour167],} ❐ #S \
+#[fg=colour241, bg=colour237]#{?client_prefix,#[fg=colour167],}#{?window_zoomed_flag, 🔍,}"
+
+set-window-option -g window-status-current-format "\
+#[fg=colour237, bg=colour214]\
+#[fg=colour239, bg=colour214] #I* \
+#[fg=colour239, bg=colour214, bold] #W \
+#[fg=colour214, bg=colour237]"
+
+set-window-option -g window-status-format "\
+#[fg=colour237,bg=colour239,noitalics]\
+#[fg=colour223,bg=colour239] #I \
+#[fg=colour223, bg=colour239] #W \
+#[fg=colour239, bg=colour237]"
+
+KUBE_TMUX_SYMBOL_CUSTOM="☸️  "
+tm_k8s="$tm_divider #(/bin/bash ~/.tmux/plugins/kube-tmux/kube.tmux 214 colour214 white)"
+tm_gcp="$tm_divider #(/bin/bash ~/.tmux/plugins/gcp-tmux/gcp.tmux)"
+
+set-option -g status-right "\
+#[fg=colour214, bg=colour237] \
+#[fg=colour237, bg=colour214] \
+#[fg=colour223, bg=colour237] $tm_gcp \
+#[fg=colour223, bg=colour237] $tm_k8s \
+#[fg=colour246, bg=colour237]  %b %d '%y\
+#[fg=colour109]  %R \
+#[fg=colour248, bg=colour239]"
