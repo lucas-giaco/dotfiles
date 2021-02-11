@@ -114,9 +114,12 @@ setup_macos() {
       echo "Enable tap to click (Trackpad)"
       defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
+      echo "Import iTerm2 plist"
+      echo iterm2/plist.xml | defaults import com.googlecode.iterm2 -
+
       echo "Kill affected applications"
 
-      for app in Safari Finder Dock Mail SystemUIServer; do killall "$app" >/dev/null 2>&1; done
+      for app in Safari Finder Dock Mail SystemUIServer iTerm; do killall "$app" >/dev/null 2>&1; done
   else
       warning "macOS not detected. Skipping."
   fi
