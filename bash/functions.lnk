@@ -4,6 +4,7 @@ function shorturl() {
         echo "Usage: \`shorturl url\`"
     return 1
   fi
+    # API deleted will have to find another way of shorting urls
     curl -s https://www.googleapis.com/urlshortener/v1/url \
       -H 'Content-Type: application/json' \
       -d '{"longUrl": '\"$1\"'}' | grep id | cut -d '"' -f 4
