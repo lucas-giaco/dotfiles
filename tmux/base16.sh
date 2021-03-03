@@ -49,7 +49,7 @@ set-window-option -g window-status-bell-style bg=colour167,fg=colour235 # bg=red
 
 set-option -g status-left "\
 #[fg=colour7, bg=colour241]#{?client_prefix,#[bg=colour167],} ❐ #S \
-#[fg=colour241, bg=colour237]#{?client_prefix,#[fg=colour167],}#{?window_zoomed_flag, 🔍,}"
+#[fg=colour241, bg=colour237]#{?client_prefix,#[fg=colour167],}#{?window_zoomed_flag, 🔍 ,}"
 
 set-window-option -g window-status-current-format "\
 #[fg=colour237, bg=colour214]\
