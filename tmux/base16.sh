@@ -64,13 +64,15 @@ set-window-option -g window-status-format "\
 #[fg=colour239, bg=colour237]"
 
 KUBE_TMUX_SYMBOL_CUSTOM="☸️  "
-tm_k8s="$tm_divider #(/bin/bash ~/.tmux/plugins/kube-tmux/kube.tmux 214 colour214 white)"
-tm_gcp="$tm_divider #(/bin/bash ~/.tmux/plugins/gcp-tmux/gcp.tmux)"
+tm_k8s="#(/bin/bash ~/.tmux/plugins/kube-tmux/kube.tmux 214 colour214 white)"
+tm_gcp="#(/bin/bash ~/.tmux/plugins/gcp-tmux/gcp.tmux)"
 
 set-option -g status-right "\
 #[fg=colour214, bg=colour237] \
 #[fg=colour237, bg=colour214] \
-#[fg=colour223, bg=colour237] $tm_gcp \
+#[fg=colour223, bg=colour237] $tm_gcp\
+#[fg=colour239, bg=colour237] \
+#[fg=colour237, bg=colour239] \
 #[fg=colour223, bg=colour237] $tm_k8s \
 #[fg=colour246, bg=colour237]  %b %d '%y\
 #[fg=colour109]  %R \
