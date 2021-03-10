@@ -32,7 +32,7 @@ fi
 
 export WORKON_HOME=$HOME/virtualenvs
 
-export PATH="$PATH:~/.dotfiles/bin"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH:~/.dotfiles/bin"
 
 # REVIEW_BASE is use in git aliases
 export REVIEW_BASE=main
