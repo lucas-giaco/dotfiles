@@ -26,7 +26,7 @@ parse_git_branch() {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
 }
 
-branch_info="\[$BOLD\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null)  ]] && echo \" -> \")\[$RESET\]\[$PURPLE\]\$(parse_git_branch)"
+branch_info="\[$BOLD\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null)  ]] && echo \"  \")\[$RESET\]\[$PURPLE\]\$(parse_git_branch)"
 
 export PS1="\n\[$YELLOW\]\u@\h: \[$GREEN\]\w$branch_info\[$WHITE\]\[$BOLD\]\n ❯ \[$RESET\]"
 
