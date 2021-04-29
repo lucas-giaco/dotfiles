@@ -7,9 +7,11 @@ else
   fi
 fi
 
-# gcloud completion bash
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+# gcloud completion bash for macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+fi
 
 # Add completion scripts based on OS
 bash_completion_location=""

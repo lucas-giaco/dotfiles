@@ -3,11 +3,11 @@ export DOTFILES=$HOME/.dotfiles
 
 # Make vim the default editor
 if hash vim &>/dev/null; then
-    export EDITOR='vim'
+  export EDITOR='vim'
 elif hash gvim &>/dev/null; then
-    export EDITOR='gvim -v'
+  export EDITOR='gvim -v'
 elif hash mvim &>/dev/null; then
-    export EDITOR='mvim -v'
+  export EDITOR='mvim -v'
 fi
 
 # Larger bash history (allow 32³ entries; default is 500)
@@ -27,7 +27,7 @@ export MANPAGER="less -X"
 
 # Always enable colored `grep` output
 if [ "$(uname)" == "Darwin" ]; then
-    export GREP_OPTIONS="--color=auto"
+  export GREP_OPTIONS="--color=auto"
 fi
 
 export WORKON_HOME=$HOME/virtualenvs

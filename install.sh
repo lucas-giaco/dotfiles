@@ -60,7 +60,8 @@ setup_homebrew() {
   if [ "$(uname)" == "Linux" ]; then
       test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
       test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+      # Step moved to bash_profile
+      # test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
   fi
 
   # install brew dependencies from Brewfile
@@ -68,63 +69,107 @@ setup_homebrew() {
 
 }
 
+setup_os(){
+  setup_linux
+  setup_macos
+}
+
+setup_linux(){
+  title "Configuring Linux"
+  if [[ "$(uname)" == "Linux" ]]; then
+
+    echo "Set bash as default shell"
+    if [[ "$SHELL" != "/bin/bash" ]]; then
+      chsh -s /bin/bash
+    else
+      echo "bash is already the default shell"
+    fi
+
+    echo "Install base packages"
+    sudo pacman --noconfirm -S git base-devel yay
+
+    echo "Install snap packages"
+    sudo snap install google-cloud-sdk --classic
+    sudo snap install slack --classic
+    sudo snap install code --classic
+    sudo snap install \
+      spotify \
+      evernote-web-client \
+      docker \
+      drawio
+
+    echo "Add user to docker group"
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+
+    echo "Install dropbox"
+    yay -Syu --aur --no-confirm dropbox
+    mv $HOME/.dropbox-dist $HOME/.dropbox-dist-bkp
+    install -dm0 $HOME/.dropbox-dist
+
+  else
+    warning "Linux not detected. Skipping."
+  fi
+}
+
 setup_macos() {
   title "Configuring macOS"
   if [[ "$(uname)" == "Darwin" ]]; then
 
-      echo "Finder: show all filename extensions"
-      defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+    echo "Finder: show all filename extensions"
+    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-      echo "show hidden files by default"
-      defaults write com.apple.Finder AppleShowAllFiles -bool false
+    echo "show hidden files by default"
+    defaults write com.apple.Finder AppleShowAllFiles -bool false
 
-      echo "only use UTF-8 in Terminal.app"
-      defaults write com.apple.terminal StringEncodings -array 4
+    echo "only use UTF-8 in Terminal.app"
+    defaults write com.apple.terminal StringEncodings -array 4
 
-      echo "expand save dialog by default"
-      defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+    echo "expand save dialog by default"
+    defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 
-      echo "show the ~/Library folder in Finder"
-      chflags nohidden ~/Library
+    echo "show the ~/Library folder in Finder"
+    chflags nohidden ~/Library
 
-      echo "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
-      defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+    echo "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
+    defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-      echo "Enable subpixel font rendering on non-Apple LCDs"
-      defaults write NSGlobalDomain AppleFontSmoothing -int 2
+    echo "Enable subpixel font rendering on non-Apple LCDs"
+    defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
-      echo "Use current directory as default search scope in Finder"
-      defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+    echo "Use current directory as default search scope in Finder"
+    defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
-      echo "Show Path bar in Finder"
-      defaults write com.apple.finder ShowPathbar -bool true
+    echo "Show Path bar in Finder"
+    defaults write com.apple.finder ShowPathbar -bool true
 
-      echo "Show Status bar in Finder"
-      defaults write com.apple.finder ShowStatusBar -bool true
+    echo "Show Status bar in Finder"
+    defaults write com.apple.finder ShowStatusBar -bool true
 
-      echo "Disable press-and-hold for keys in favor of key repeat"
-      defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+    echo "Disable press-and-hold for keys in favor of key repeat"
+    defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-      echo "Set a blazingly fast keyboard repeat rate"
-      defaults write NSGlobalDomain KeyRepeat -int 1
+    echo "Set a blazingly fast keyboard repeat rate"
+    defaults write NSGlobalDomain KeyRepeat -int 1
 
-      echo "Set a shorter Delay until key repeat"
-      defaults write NSGlobalDomain InitialKeyRepeat -int 15
+    echo "Set a shorter Delay until key repeat"
+    defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
-      echo "Enable tap to click (Trackpad)"
-      defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+    echo "Enable tap to click (Trackpad)"
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
-      echo "Import iTerm2 plist"
-      echo iterm2/plist.xml | defaults import com.googlecode.iterm2 -
+    echo "Import iTerm2 plist"
+    echo iterm2/plist.xml | defaults import com.googlecode.iterm2 -
 
-      echo "Kill affected applications"
+    echo "Kill affected applications"
 
-      for app in Safari Finder Dock Mail SystemUIServer iTerm; do killall "$app" >/dev/null 2>&1; done
+    for app in Safari Finder Dock Mail SystemUIServer iTerm; do killall "$app" >/dev/null 2>&1; done
   else
-      warning "macOS not detected. Skipping."
+    warning "macOS not detected. Skipping."
   fi
 }
 
+setup_os
 setup_links
 setup_homebrew
-setup_macos
