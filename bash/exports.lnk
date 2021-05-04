@@ -28,11 +28,12 @@ export MANPAGER="less -X"
 # Always enable colored `grep` output
 if [ "$(uname)" == "Darwin" ]; then
   export GREP_OPTIONS="--color=auto"
+  export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH:~/.dotfiles/bin"
 fi
 
 export WORKON_HOME=$HOME/virtualenvs
 
-export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH:~/.dotfiles/bin"
-
 # REVIEW_BASE is use in git aliases
 export REVIEW_BASE=main
+
+. $HOME/.asdf/asdf.sh
