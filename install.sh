@@ -78,15 +78,17 @@ setup_linux(){
   title "Configuring Linux"
   if [[ "$(uname)" == "Linux" ]]; then
 
-    echo "Set bash as default shell"
-    if [[ "$SHELL" != "/bin/bash" ]]; then
-      chsh -s /bin/bash
-    else
-      echo "bash is already the default shell"
-    fi
+    echo "Update repos"
+    sudo apt update
 
     echo "Install base packages"
-    sudo pacman --noconfirm -S git base-devel yay
+    sudo apt install -y --no-install-recommends \
+      curl \
+      git \
+      tmux \
+      vim \
+      wget
+
 
     echo "Install snap packages"
     sudo snap install google-cloud-sdk --classic
@@ -96,17 +98,23 @@ setup_linux(){
       spotify \
       evernote-web-client \
       docker \
-      drawio
+      drawio \
+      google-chat-electron \
+      teams
 
     echo "Add user to docker group"
     sudo groupadd docker
     sudo usermod -aG docker $USER
     newgrp docker
 
-    echo "Install dropbox"
-    yay -Syu --aur --no-confirm dropbox
-    mv $HOME/.dropbox-dist $HOME/.dropbox-dist-bkp
-    install -dm0 $HOME/.dropbox-dist
+    echo "Install IPSec VPN client"
+    sudo apt install -y --no-install-recommends network-manager-l2tp-gnome
+
+    echo "Install asdf"
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+    cd ~/.asdf
+    git checkout "$(git describe --abbrev=0 --tags)"
+    cd -
 
   else
     warning "Linux not detected. Skipping."
@@ -165,11 +173,13 @@ setup_macos() {
     echo "Kill affected applications"
 
     for app in Safari Finder Dock Mail SystemUIServer iTerm; do killall "$app" >/dev/null 2>&1; done
+
+    setup_homebrew
+
   else
     warning "macOS not detected. Skipping."
   fi
 }
 
-setup_os
 setup_links
-setup_homebrew
+setup_os
