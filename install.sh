@@ -84,14 +84,19 @@ setup_linux(){
     echo "Install base packages"
     sudo apt install -y --no-install-recommends \
       curl \
+      fonts-hack-ttf \
+      geary \
       git \
+      nautilus-dropbox \
+      network-manager-l2tp-gnome \
+      python3 \
+      python3-pip \
+      python-is-python3 \
       tmux \
       vim \
       wget
 
-
     echo "Install snap packages"
-    sudo snap install google-cloud-sdk --classic
     sudo snap install slack --classic
     sudo snap install code --classic
     sudo snap install \
@@ -103,18 +108,44 @@ setup_linux(){
       teams
 
     echo "Add user to docker group"
-    sudo groupadd docker
-    sudo usermod -aG docker $USER
-    newgrp docker
-
-    echo "Install IPSec VPN client"
-    sudo apt install -y --no-install-recommends network-manager-l2tp-gnome
+    if ! groups $USER | grep -q docker; then
+      sudo groupadd docker
+      sudo usermod -aG docker $USER
+      newgrp docker
+    fi
 
     echo "Install asdf"
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-    cd ~/.asdf
+    if [[ ! -d "$HOME/.asdf" ]]; then
+      git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+    fi
+    cd $HOME/.asdf
+    git pull origin master
     git checkout "$(git describe --abbrev=0 --tags)"
     cd -
+
+    echo "Add asdf plugins"
+    asdf plugin add act
+    asdf plugin add awscli
+    asdf plugin add aws-iam-authenticator
+    asdf plugin add gcloud
+    asdf plugin add hadolint
+    asdf plugin add helm
+    asdf plugin add istioctl
+    asdf plugin add jq
+    asdf plugin add kind
+    asdf plugin add kubectl
+    asdf plugin add pre-commit
+    asdf plugin add shellcheck
+    asdf plugin add terraform
+    asdf plugin add tflint
+    asdf plugin add tfsec
+    asdf plugin add yq
+
+    echo "Install asdf plugins"
+    asdf install
+
+    echo "Autoremove no longer needed packages"
+    sudo apt autoremove -y
 
   else
     warning "Linux not detected. Skipping."
