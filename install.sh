@@ -83,18 +83,18 @@ setup_linux(){
 
     echo "Install base packages"
     sudo apt install -y --no-install-recommends \
+      build-essential \
       curl \
       fonts-hack-ttf \
       geary \
       git \
+      gnome-calendar \
       nautilus-dropbox \
       network-manager-l2tp-gnome \
       python3 \
       python3-pip \
       python-is-python3 \
-      tmux \
-      vim \
-      wget
+      stacer
 
     echo "Install snap packages"
     sudo snap install slack --classic
@@ -105,7 +105,7 @@ setup_linux(){
       docker \
       drawio \
       google-chat-electron \
-      teams
+      teams-for-linux
 
     echo "Add user to docker group"
     if ! groups $USER | grep -q docker; then
@@ -113,36 +113,6 @@ setup_linux(){
       sudo usermod -aG docker $USER
       newgrp docker
     fi
-
-    echo "Install asdf"
-    if [[ ! -d "$HOME/.asdf" ]]; then
-      git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-    fi
-    cd $HOME/.asdf
-    git pull origin master
-    git checkout "$(git describe --abbrev=0 --tags)"
-    cd -
-
-    echo "Add asdf plugins"
-    asdf plugin add act
-    asdf plugin add awscli
-    asdf plugin add aws-iam-authenticator
-    asdf plugin add gcloud
-    asdf plugin add hadolint
-    asdf plugin add helm
-    asdf plugin add istioctl
-    asdf plugin add jq
-    asdf plugin add kind
-    asdf plugin add kubectl
-    asdf plugin add pre-commit
-    asdf plugin add shellcheck
-    asdf plugin add terraform
-    asdf plugin add tflint
-    asdf plugin add tfsec
-    asdf plugin add yq
-
-    echo "Install asdf plugins"
-    asdf install
 
     echo "Autoremove no longer needed packages"
     sudo apt autoremove -y
@@ -205,8 +175,6 @@ setup_macos() {
 
     for app in Safari Finder Dock Mail SystemUIServer iTerm; do killall "$app" >/dev/null 2>&1; done
 
-    setup_homebrew
-
   else
     warning "macOS not detected. Skipping."
   fi
@@ -214,3 +182,4 @@ setup_macos() {
 
 setup_links
 setup_os
+setup_homebrew

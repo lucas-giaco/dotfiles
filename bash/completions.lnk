@@ -27,4 +27,3 @@ fi
 hash helm &>/dev/null && helm completion bash > $bash_completion_location/helm
 hash kind &>/dev/null && kind completion bash > $bash_completion_location/kind
 
-. $HOME/.asdf/completions/asdf.bash
