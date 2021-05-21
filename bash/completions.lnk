@@ -21,7 +21,7 @@ bash_completion_location=""
 if [ "$(uname)" == "Darwin" ]; then
   bash_completion_location=/usr/local/etc/bash_completion.d
 else
-  bash_completion_location=/etc/bash_completion.d
+  bash_completion_location=/home/linuxbrew/.linuxbrew/etc/bash_completion.d
 fi
 
 hash helm &>/dev/null && helm completion bash > $bash_completion_location/helm
