@@ -39,4 +39,3 @@ export WORKON_HOME=$HOME/virtualenvs
 
 # REVIEW_BASE is use in git aliases
 export REVIEW_BASE=main
-

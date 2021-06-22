@@ -6,7 +6,7 @@
 
 PS3="Please choose your session: "
 sessions=$(tmux list-sessions -F "#S")
-options=("new" $sessions)
+options=("new" "$sessions")
 echo ""
 echo "Available sessions"
 echo "=================="

@@ -29,4 +29,3 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
-

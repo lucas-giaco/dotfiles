@@ -108,9 +108,9 @@ setup_linux(){
       teams-for-linux
 
     echo "Add user to docker group"
-    if ! groups $USER | grep -q docker; then
+    if ! groups "$USER" | grep -q docker; then
       sudo groupadd docker
-      sudo usermod -aG docker $USER
+      sudo usermod -aG docker "$USER"
       newgrp docker
     fi
 
