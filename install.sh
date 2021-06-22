@@ -85,6 +85,7 @@ setup_linux(){
     sudo apt install -y --no-install-recommends \
       build-essential \
       curl \
+      docker.io \
       fonts-hack-ttf \
       geary \
       git \
@@ -102,7 +103,6 @@ setup_linux(){
     sudo snap install \
       spotify \
       evernote-web-client \
-      docker \
       drawio \
       google-chat-electron \
       teams-for-linux
