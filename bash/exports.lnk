@@ -39,3 +39,6 @@ export WORKON_HOME=$HOME/virtualenvs
 
 # REVIEW_BASE is use in git aliases
 export REVIEW_BASE=main
+
+# Allow pre-commit without configs
+export PRE_COMMIT_ALLOW_NO_CONFIG=1

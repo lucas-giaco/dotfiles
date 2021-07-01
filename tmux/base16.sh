@@ -65,7 +65,8 @@ set-window-option -g window-status-format "\
 #[fg=colour223, bg=colour239] #W \
 #[fg=colour239, bg=colour237]"
 
-export KUBE_TMUX_SYMBOL_CUSTOM="☸️  "
+# shellcheck disable=SC2034
+KUBE_TMUX_SYMBOL_CUSTOM="☸️  "
 tm_k8s="#(/bin/bash ~/.tmux/plugins/kube-tmux/kube.tmux 214 colour214 white)"
 tm_gcp="#(/bin/bash ~/.tmux/plugins/gcp-tmux/gcp.tmux)"
 

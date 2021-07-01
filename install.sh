@@ -117,6 +117,13 @@ setup_linux(){
     echo "Autoremove no longer needed packages"
     sudo apt autoremove -y
 
+    echo "Add auto-upgrade crontabs"
+    cat << EOF | crontab
+0 11 * * * root apt update && apt upgrade -y && apt autoremove && apt autoclean
+0 11 * * * $USER brew update && brew upgrade^C
+EOF
+    crontab -l
+
   else
     warning "Linux not detected. Skipping."
   fi
