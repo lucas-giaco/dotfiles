@@ -78,13 +78,21 @@ setup_linux(){
   title "Configuring Linux"
   if [[ "$(uname)" == "Linux" ]]; then
 
+    echo "Adding Microsoft GPG key"
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    rm -f packages.microsoft.gpg
+
     echo "Update repos"
     sudo apt update
 
     echo "Install base packages"
     sudo apt install -y --no-install-recommends \
+      apt-transport-https \
       build-essential \
       curl \
+      code \
       docker.io \
       fonts-hack-ttf \
       geary \
@@ -99,7 +107,6 @@ setup_linux(){
 
     echo "Install snap packages"
     sudo snap install slack --classic
-    sudo snap install code --classic
     sudo snap install \
       spotify \
       evernote-web-client \
