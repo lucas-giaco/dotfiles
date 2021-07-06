@@ -103,6 +103,8 @@ setup_linux(){
       python3 \
       python3-pip \
       python-is-python3 \
+      p7zip-full \
+      p7zip-rar \
       stacer
 
     echo "Install snap packages"
