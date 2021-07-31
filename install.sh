@@ -113,8 +113,7 @@ setup_linux(){
       spotify \
       evernote-web-client \
       drawio \
-      google-chat-electron \
-      teams-for-linux
+      google-chat-electron
 
     echo "Add user to docker group"
     if ! groups "$USER" | grep -q docker; then
