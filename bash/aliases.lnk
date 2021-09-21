@@ -22,6 +22,7 @@ alias gc='git checkout'
 alias gcm='git commit -m '
 alias gd='git diff'
 alias gs='git status'
+alias gp='git pull --prune'
 
 # k8s aliases
 hash kubectl &>/dev/null && \

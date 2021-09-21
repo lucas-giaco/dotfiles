@@ -105,13 +105,13 @@ setup_linux(){
       python-is-python3 \
       p7zip-full \
       p7zip-rar \
-      stacer
+      stacer \
+      telegram-desktop
 
     echo "Install snap packages"
     sudo snap install slack --classic
     sudo snap install \
       spotify \
-      evernote-web-client \
       drawio \
       google-chat-electron
 
@@ -127,8 +127,8 @@ setup_linux(){
 
     echo "Add auto-upgrade crontabs"
     cat << EOF | crontab
-0 11 * * * root apt update && apt upgrade -y && apt autoremove && apt autoclean
-0 11 * * * $USER brew update && brew upgrade^C
+0 11 * * * root (apt update && apt upgrade -y && apt autoremove -y && apt autoclean) > /tmp/apt.log
+0 11 * * * $USER (brew update && brew upgrade) > /tmp/brew.log
 EOF
     crontab -l
 
