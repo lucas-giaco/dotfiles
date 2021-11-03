@@ -42,3 +42,5 @@ export REVIEW_BASE=main
 
 # Allow pre-commit without configs
 export PRE_COMMIT_ALLOW_NO_CONFIG=1
+
+export PATH="${PATH}:${HOME}/.krew/bin"

@@ -29,6 +29,7 @@ hash kubectl &>/dev/null && \
   alias k=kubectl && \
   alias kc='kubectl config set-context --current --namespace ' && \
   alias kx='kubectl explain' && \
+  alias krew='kubectl krew'
   source <(kubectl completion bash) && \
   complete -F __start_kubectl k
 
