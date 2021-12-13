@@ -24,6 +24,7 @@ else
   bash_completion_location=/home/linuxbrew/.linuxbrew/etc/bash_completion.d
 fi
 
-hash helm &>/dev/null && helm completion bash > $bash_completion_location/helm
-hash kind &>/dev/null && kind completion bash > $bash_completion_location/kind
-hash infracost &>/dev/null && infracost completion --shell bash > $bash_completion_location/infracost
+hash helm &>/dev/null && helm completion bash > ${bash_completion_location}/helm
+hash kind &>/dev/null && kind completion bash > ${bash_completion_location}/kind
+hash infracost &>/dev/null && infracost completion --shell bash > ${bash_completion_location}/infracost
+hash terraform-docs &>/dev/null && terraform-docs completion bash > ${bash_completion_location}/terraform-docs
