@@ -129,6 +129,7 @@ setup_linux(){
     cat << EOF | crontab
 0 11 * * * root (apt update && apt upgrade -y && apt autoremove -y && apt autoclean) > /tmp/apt.log
 0 11 * * * $USER (brew doctor && brew update && brew upgrade) > /tmp/brew.log
+0 11 1 * * $USER docker system prune -af > /tmp/docker-cleanup.log
 EOF
     crontab -l
 
