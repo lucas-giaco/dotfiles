@@ -8,6 +8,7 @@ tap "nektos/tap"
 # packages
 brew "nektos/tap/act"
 brew "awscli"
+brew "docker-credential-helper-ecr"
 brew "fzf"
 brew "gitlab-runner"
 brew "go"

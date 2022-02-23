@@ -95,7 +95,6 @@ setup_linux(){
       code \
       docker.io \
       fonts-hack-ttf \
-      geary \
       git \
       gnome-calendar \
       nautilus-dropbox \
