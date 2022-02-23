@@ -78,25 +78,32 @@ setup_linux(){
   title "Configuring Linux"
   if [[ "$(uname)" == "Linux" ]]; then
 
-    echo "Adding Microsoft GPG key"
+    info "Adding Microsoft GPG key"
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
     sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
     sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
     rm -f packages.microsoft.gpg
 
-    echo "Update repos"
+    info "Adding Google GPG key"
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg
+
+    info "Update repos"
     sudo apt update
 
-    echo "Install base packages"
+    info "Install base packages"
     sudo apt install -y --no-install-recommends \
       apt-transport-https \
       build-essential \
+      ca-certificates \
       curl \
       code \
       docker.io \
       fonts-hack-ttf \
       git \
       gnome-calendar \
+      gnupg \
+      google-cloud-sdk \
       nautilus-dropbox \
       network-manager-l2tp-gnome \
       python3 \
@@ -107,24 +114,24 @@ setup_linux(){
       stacer \
       telegram-desktop
 
-    echo "Install snap packages"
+    info "Install snap packages"
     sudo snap install slack --classic
     sudo snap install \
       spotify \
       drawio \
       google-chat-electron
 
-    echo "Add user to docker group"
+    info "Add user to docker group"
     if ! groups "$USER" | grep -q docker; then
       sudo groupadd docker
       sudo usermod -aG docker "$USER"
       newgrp docker
     fi
 
-    echo "Autoremove no longer needed packages"
+    info "Autoremove no longer needed packages"
     sudo apt autoremove -y
 
-    echo "Add auto-upgrade crontabs"
+    info "Add auto-upgrade crontabs"
     cat << EOF | crontab
 0 11 * * * root (apt update && apt upgrade -y && apt autoremove -y && apt autoclean) > /tmp/apt.log
 0 11 * * * $USER (brew doctor && brew update && brew upgrade) > /tmp/brew.log
