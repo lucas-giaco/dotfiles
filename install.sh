@@ -119,7 +119,7 @@ setup_linux(){
     sudo snap install \
       spotify \
       drawio \
-      google-chat-electron
+      mailspring
 
     info "Add user to docker group"
     if ! groups "$USER" | grep -q docker; then
