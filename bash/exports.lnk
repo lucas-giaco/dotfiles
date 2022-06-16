@@ -45,3 +45,6 @@ export REVIEW_BASE=main
 export PRE_COMMIT_ALLOW_NO_CONFIG=1
 
 export PATH="${PATH}:${HOME}/.krew/bin"
+
+# direnv hook
+eval "$(direnv hook bash)"
