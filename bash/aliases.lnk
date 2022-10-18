@@ -14,6 +14,7 @@ alias sudo='sudo '
 alias ..='cd ../'
 alias ....='cd ../../'
 alias ......='cd ../../../'
+alias ........='cd ../../../../'
 
 # git aliases
 alias ga='git add'
@@ -23,6 +24,8 @@ alias gcm='git commit -m '
 alias gd='git diff'
 alias gs='git status'
 alias gp='git pull --prune'
+
+alias tf=terraform
 
 # k8s aliases
 hash kubectl &>/dev/null && \
