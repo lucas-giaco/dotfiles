@@ -45,6 +45,13 @@ export REVIEW_BASE=main
 export PRE_COMMIT_ALLOW_NO_CONFIG=1
 
 export PATH="${PATH}:${HOME}/.krew/bin"
+export PATH="${PATH}:${HOME}/go/bin"
 
 # direnv hook
 eval "$(direnv hook bash)"
+
+# rbenv init
+eval "$(rbenv init - bash)"
+
+#pyenv init
+eval "$(pyenv init -)"
