@@ -1,14 +1,4 @@
 #!/bin/bash
-function shorturl() {
-    if [ -z "${1}" ]; then
-        echo "Usage: \`shorturl url\`"
-    return 1
-  fi
-    # API deleted will have to find another way of shorting urls
-    curl -s https://www.googleapis.com/urlshortener/v1/url \
-      -H 'Content-Type: application/json' \
-      -d '{"longUrl": '\"$1\"'}' | grep id | cut -d '"' -f 4
-}
 
 # Use Git’s colored diff when available
 if hash git &>/dev/null; then
@@ -17,20 +7,13 @@ if hash git &>/dev/null; then
   }
 fi
 
-# adapted from https://github.com/baskerville/bin
-cp-progress() {
-  for pid in $(pgrep -x cp) ; do
-    for fd in 4 3 ; do
-      symlink="/proc/${pid}/fd/${fd}"
-      if [ -L "$symlink" ] ; then
-        ls -sh "$(readlink "$symlink")"
-      fi
-    done
-  done
-}
-
 # kubectl get all does not get all :-/
 # tip from https://github.com/kubernetes/kubectl/issues/151#issuecomment-402003022
 kubectl-all() {
-    kubectl api-resources --verbs=list -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found
+  kubectl api-resources --verbs=list -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found
+}
+
+# Delete local branches mapped to a remote that no longer exists
+clean_local_branches(){
+  git fetch -p ; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
 }
