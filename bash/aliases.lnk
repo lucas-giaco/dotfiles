@@ -27,6 +27,10 @@ alias gp='git pull --prune'
 
 alias tf=terraform
 
+alias pyenv="LDFLAGS="-Wl,-rpath,$(brew --prefix openssl)/lib" CPPFLAGS="-I$(brew --prefix openssl)/include" CONFIGURE_OPTS="--with-openssl=$(brew --prefix openssl)" pyenv"
+
+alias awslocal='aws --profile local --endpoint-url=http://localhost:4566'
+
 # k8s aliases
 hash kubectl &>/dev/null && \
   alias k=kubectl && \
