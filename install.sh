@@ -106,9 +106,6 @@ setup_linux(){
       google-cloud-sdk \
       nautilus-dropbox \
       network-manager-l2tp-gnome \
-      python3 \
-      python3-pip \
-      python-is-python3 \
       p7zip-full \
       p7zip-rar \
       stacer \
@@ -117,9 +114,7 @@ setup_linux(){
     info "Install snap packages"
     sudo snap install slack --classic
     sudo snap install \
-      spotify \
-      drawio \
-      mailspring
+      drawio
 
     info "Add user to docker group"
     if ! groups "$USER" | grep -q docker; then
