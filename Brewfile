@@ -2,7 +2,6 @@
 tap "aquasecurity/trivy"
 tap "hashicorp/tap"
 tap "homebrew/bundle"
-tap "homebrew/core"
 tap "little-angry-clouds/homebrew-my-brews"
 tap "nektos/tap"
 
