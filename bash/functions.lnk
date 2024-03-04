@@ -17,3 +17,8 @@ kubectl-all() {
 clean_local_branches(){
   git fetch -p ; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
 }
+
+# Docker ECR login without credentials helper
+docker_login_ecr(){
+  aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin $(aws sts get-caller-identity --output text --query Account).dkr.ecr.${AWS_REGION}.amazonaws.com
+}

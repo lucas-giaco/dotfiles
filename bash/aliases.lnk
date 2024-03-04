@@ -15,6 +15,7 @@ alias ..='cd ../'
 alias ....='cd ../../'
 alias ......='cd ../../../'
 alias ........='cd ../../../../'
+alias ..........='cd ../../../../../'
 
 # git aliases
 alias ga='git add'
@@ -65,3 +66,12 @@ else
     alias open=gnome-open
   fi
 fi
+
+# Docker aliases
+hash docker &>/dev/null && \
+  alias d=docker && \
+  complete -F _docker d
+alias dc='docker compose'
+alias docker-compose='docker compose'
+
+alias test_dockerignore='rsync -avn . /dev/shm --exclude-from'

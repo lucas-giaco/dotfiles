@@ -88,6 +88,17 @@ setup_linux(){
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg
 
+    info "Adding Docker GPG key"
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+    # shellcheck disable=SC2027,SC2046
+    echo \
+      "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+      "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+
     info "Update repos"
     sudo apt update
 
@@ -98,7 +109,11 @@ setup_linux(){
       ca-certificates \
       curl \
       code \
-      docker.io \
+      containerd.io \
+      docker-buildx-plugin \
+      docker-compose-plugin \
+      docker-ce \
+      docker-ce-cli \
       fonts-hack-ttf \
       git \
       gnome-calendar \

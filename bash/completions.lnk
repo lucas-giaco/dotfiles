@@ -21,6 +21,9 @@ hash kind &>/dev/null && kind completion bash > ${bash_completion_location}/kind
 hash terraform-docs &>/dev/null && terraform-docs completion bash > ${bash_completion_location}/terraform-docs
 hash stern &>/dev/null && stern --completion bash > ${bash_completion_location}/stern
 
+# docker completion
+curl -Lso ${bash_completion_location}/docker https://raw.githubusercontent.com/docker/cli/master/contrib/completion/bash/docker
+
 # nvm completion
 [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
 
