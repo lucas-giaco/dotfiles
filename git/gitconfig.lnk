@@ -3,7 +3,7 @@
   name = Lucas Giacomazzi
   email = lucasgiacomazzi@gmail.com
 [init]
-  defaultBranch= main
+  defaultBranch= master
   templateDir = /home/giaco/.dotfiles/git/templates
 [color]
   diff = auto
